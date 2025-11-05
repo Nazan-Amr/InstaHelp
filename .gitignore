@@ -1,0 +1,38 @@
+# Root level .gitignore
+
+# Environment files (NEVER commit these!)
+.env
+.env.local
+.env.*.local
+
+# RSA Keys (NEVER commit these!)
+*.pem
+keys/
+*.key
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Node
+node_modules/
+
+# Build outputs
+dist/
+build/
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
+

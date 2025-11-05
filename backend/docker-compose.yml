@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: instahelp-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+      - RSA_PRIVATE_KEY_PATH=/app/keys/private_key.pem
+      - RSA_PUBLIC_KEY_PATH=/app/keys/public_key.pem
+      - AES_MASTER_KEY=${AES_MASTER_KEY}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_USER=${EMAIL_USER}
+      - EMAIL_PASS=${EMAIL_PASS}
+      - DEVICE_HMAC_SECRET=${DEVICE_HMAC_SECRET}
+    volumes:
+      - ./keys:/app/keys:ro
+      - ./logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - instahelp-network
+
+networks:
+  instahelp-network:
+    driver: bridge
+
