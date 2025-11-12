@@ -76,7 +76,10 @@ jobs:
 
   build-artifacts:
     runs-on: ubuntu-latest
-    needs: [backend-lint-test, frontend-lint-test]
+    needs:
+      - backend-lint-test
+      - frontend-lint-test
+    if: always()
     if: github.event_name == 'push'
 
     steps:
