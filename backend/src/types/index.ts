@@ -28,23 +28,74 @@ export interface User {
   verified_at?: string;
 }
 
+export interface Medication {
+  name: string;
+  dosage: string;
+  frequency: string;
+  reason: string;
+  start_date?: string;
+}
+
+export interface Allergy {
+  allergen: string;
+  severity: 'mild' | 'moderate' | 'severe' | 'critical';
+  reaction: string;
+}
+
+export interface Surgery {
+  name: string;
+  date: string;
+  surgeon?: string;
+  hospital?: string;
+  complications?: string;
+}
+
+export interface Immunization {
+  vaccine: string;
+  date: string;
+  dose?: string;
+  booster_due?: string;
+}
+
+export interface ChronicCondition {
+  condition: string;
+  diagnosed_date: string;
+  status: 'active' | 'controlled' | 'resolved';
+  treatment: string;
+}
+
+export interface VitalRange {
+  heart_rate_min: number;
+  heart_rate_max: number;
+  temperature_min: number;
+  temperature_max: number;
+  blood_pressure_systolic: number;
+  blood_pressure_diastolic: number;
+}
+
 export interface Patient {
   id: string;
   user_id: string; // Owner user ID
   // Public view fields (unencrypted)
   public_view: {
     blood_type: string;
-    allergies: string[];
+    rh_factor: '+' | '-';
+    allergies: Allergy[];
     emergency_contact: {
       name: string;
       phone: string;
       relationship: string;
     };
     short_instructions: string;
+    vital_ranges: VitalRange;
     last_vitals?: {
       timestamp: string;
       heart_rate?: number;
       temperature?: number;
+      blood_pressure_systolic?: number;
+      blood_pressure_diastolic?: number;
+      oxygen_saturation?: number;
+      respiratory_rate?: number;
     };
   };
   // Private profile (encrypted)
@@ -52,6 +103,25 @@ export interface Patient {
   encryption_key_wrapped: string; // RSA-wrapped AES key
   created_at: string;
   updated_at: string;
+}
+
+export interface PrivateProfileExtended {
+  national_id: string;
+  full_name: string;
+  date_of_birth: string;
+  gender: 'male' | 'female' | 'other';
+  chronic_conditions: ChronicCondition[];
+  surgeries: Surgery[];
+  medications: Medication[];
+  immunizations: Immunization[];
+  doctor_notes: string;
+  full_medical_history: string;
+  scanned_files: Array<{
+    file_path: string;
+    file_name: string;
+    uploaded_at: string;
+    uploaded_by: string;
+  }>;
 }
 
 export interface PrivateProfile {
