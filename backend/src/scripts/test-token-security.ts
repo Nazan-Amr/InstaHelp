@@ -31,7 +31,7 @@ async function testTokenSecurity() {
     'token@with#special$chars',
   ];
 
-  invalidTokens.forEach((token) => {
+  invalidTokens.forEach(token => {
     const isValid = isValidTokenFormat(token);
     console.log(`  ${token}: ${isValid ? '❌ VALID (should be invalid)' : '✅ Invalid (correct)'}`);
   });
@@ -59,7 +59,9 @@ async function testTokenSecurity() {
   console.log(`Tokens per second: ${Math.round(attempts / (duration / 1000))}`);
 
   if (matches > 0) {
-    console.log('\n⚠️  WARNING: Collision detected! This is extremely rare and indicates a problem.');
+    console.log(
+      '\n⚠️  WARNING: Collision detected! This is extremely rare and indicates a problem.'
+    );
   } else {
     console.log('\n✅ No collisions found - token generation is secure');
   }
@@ -100,4 +102,3 @@ async function testTokenSecurity() {
 }
 
 testTokenSecurity();
-

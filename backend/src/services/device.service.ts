@@ -78,11 +78,14 @@ class DeviceService {
         heart_rate: payload.hr,
         temperature: payload.temp,
         additional_data: Object.keys(payload)
-          .filter((key) => !['device_id', 'timestamp', 'hr', 'temp', 'signature'].includes(key))
-          .reduce((acc, key) => {
-            acc[key] = payload[key];
-            return acc;
-          }, {} as Record<string, any>),
+          .filter(key => !['device_id', 'timestamp', 'hr', 'temp', 'signature'].includes(key))
+          .reduce(
+            (acc, key) => {
+              acc[key] = payload[key];
+              return acc;
+            },
+            {} as Record<string, any>
+          ),
       })
       .select()
       .single();
@@ -125,7 +128,7 @@ class DeviceService {
       return [];
     }
 
-    return (data || []).map((vitals) => this.mapVitalsFromDB(vitals));
+    return (data || []).map(vitals => this.mapVitalsFromDB(vitals));
   }
 
   /**
@@ -146,4 +149,3 @@ class DeviceService {
 }
 
 export const deviceService = new DeviceService();
-

@@ -154,7 +154,10 @@ class PatientService {
   /**
    * Update last vitals timestamp in public view
    */
-  async updateLastVitals(patientId: string, vitals: { timestamp: string; heart_rate?: number; temperature?: number }): Promise<void> {
+  async updateLastVitals(
+    patientId: string,
+    vitals: { timestamp: string; heart_rate?: number; temperature?: number }
+  ): Promise<void> {
     const patient = await this.getPatientById(patientId);
     if (!patient) {
       throw new Error('Patient not found');
@@ -185,4 +188,3 @@ class PatientService {
 }
 
 export const patientService = new PatientService();
-

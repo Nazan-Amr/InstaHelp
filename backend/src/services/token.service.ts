@@ -100,7 +100,10 @@ class TokenService {
     // Create new token
     const newToken = await this.createToken(patientId);
 
-    logger.info({ patientId, oldTokenId: currentToken?.id, newTokenId: newToken.id }, 'Token rotated');
+    logger.info(
+      { patientId, oldTokenId: currentToken?.id, newTokenId: newToken.id },
+      'Token rotated'
+    );
 
     return newToken;
   }
@@ -137,4 +140,3 @@ class TokenService {
 }
 
 export const tokenService = new TokenService();
-

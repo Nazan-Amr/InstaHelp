@@ -12,4 +12,3 @@ router.use(requireRole(UserRole.DOCTOR, UserRole.ADMIN));
 router.get('/patients', asyncHandler(getAllPatients));
 
 export default router;
-

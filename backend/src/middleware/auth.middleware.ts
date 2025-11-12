@@ -54,7 +54,10 @@ export const requireRole = (...allowedRoles: UserRole[]) => {
     }
 
     if (!allowedRoles.includes(req.user.role)) {
-      logger.warn({ userId: req.user.userId, role: req.user.role, requiredRoles: allowedRoles }, 'Access denied');
+      logger.warn(
+        { userId: req.user.userId, role: req.user.role, requiredRoles: allowedRoles },
+        'Access denied'
+      );
       res.status(403).json({ error: 'Insufficient permissions' });
       return;
     }
@@ -74,4 +77,3 @@ export const getClientIp = (req: Request): string => {
     'unknown'
   );
 };
-

@@ -25,7 +25,10 @@ export const errorHandler = (
   }
 
   if (err instanceof AppError) {
-    logger.warn({ error: err.message, statusCode: err.statusCode, path: req.path }, 'Operational error');
+    logger.warn(
+      { error: err.message, statusCode: err.statusCode, path: req.path },
+      'Operational error'
+    );
     res.status(err.statusCode).json({
       error: err.message,
     });
@@ -39,4 +42,3 @@ export const errorHandler = (
     ...(process.env.NODE_ENV === 'development' && { details: err.message }),
   });
 };
-

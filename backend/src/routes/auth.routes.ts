@@ -24,7 +24,11 @@ router.post(
 
 router.post(
   '/verify-otp',
-  [body('email').isEmail().normalizeEmail(), body('otp').isLength({ min: 6, max: 6 }), handleValidationErrors],
+  [
+    body('email').isEmail().normalizeEmail(),
+    body('otp').isLength({ min: 6, max: 6 }),
+    handleValidationErrors,
+  ],
   asyncHandler(verifyOTP)
 );
 
@@ -56,4 +60,3 @@ router.post('/reset-password', asyncHandler(resetPassword));
 router.get('/me', authenticate, asyncHandler(getMe));
 
 export default router;
-

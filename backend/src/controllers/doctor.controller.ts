@@ -51,4 +51,3 @@ export const getAllPatients = async (req: AuthenticatedRequest, res: Response): 
     patients: formattedPatients,
   });
 };
-

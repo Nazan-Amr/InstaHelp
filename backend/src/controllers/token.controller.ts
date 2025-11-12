@@ -128,4 +128,3 @@ export const revokeToken = async (req: AuthenticatedRequest, res: Response): Pro
     message: 'Token revoked successfully',
   });
 };
-

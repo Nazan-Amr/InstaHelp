@@ -34,4 +34,3 @@ router.get('/pending-changes', asyncHandler(getAllPendingChanges));
 router.get('/audit-logs', asyncHandler(getAuditLogs));
 
 export default router;
-

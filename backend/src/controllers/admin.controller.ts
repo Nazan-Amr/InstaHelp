@@ -56,7 +56,10 @@ export const verifyDoctor = async (req: AuthenticatedRequest, res: Response): Pr
   });
 };
 
-export const getUnverifiedDoctors = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+export const getUnverifiedDoctors = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
   if (!req.user) {
     throw new AppError(401, 'Unauthorized');
   }
@@ -106,7 +109,10 @@ export const getAuditLogs = async (req: AuthenticatedRequest, res: Response): Pr
   });
 };
 
-export const getVerifiedDoctors = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+export const getVerifiedDoctors = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
   if (!req.user) {
     throw new AppError(401, 'Unauthorized');
   }
@@ -237,7 +243,10 @@ export const revokeToken = async (req: AuthenticatedRequest, res: Response): Pro
   });
 };
 
-export const getAllPendingChanges = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+export const getAllPendingChanges = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
   if (!req.user) {
     throw new AppError(401, 'Unauthorized');
   }
@@ -260,11 +269,11 @@ export const getAllPendingChanges = async (req: AuthenticatedRequest, res: Respo
     const approvals = change.approvals || [];
     const ownerApprovals = approvals.filter((a: any) => a.user_role === 'owner').length;
     const doctorApprovals = approvals.filter((a: any) => a.user_role === 'doctor').length;
-    
+
     let requiredOwners = 0;
     let requiredDoctors = 0;
     let approvalStatus = '';
-    
+
     if (change.initiated_by_role === 'owner') {
       requiredOwners = 0;
       requiredDoctors = 2;
@@ -282,7 +291,7 @@ export const getAllPendingChanges = async (req: AuthenticatedRequest, res: Respo
         approvalStatus = 'Waiting for 1 doctor approval';
       }
     }
-    
+
     if (change.status === 'finalized') {
       approvalStatus = 'Finalized';
     } else if (change.status === 'rejected') {
@@ -373,4 +382,3 @@ export const deletePatient = async (req: AuthenticatedRequest, res: Response): P
     message: 'Patient deleted successfully',
   });
 };
-

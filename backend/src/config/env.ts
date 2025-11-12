@@ -69,10 +69,9 @@ const requiredEnvVars = [
 ];
 
 if (config.nodeEnv === 'production') {
-  requiredEnvVars.forEach((varName) => {
+  requiredEnvVars.forEach(varName => {
     if (!process.env[varName]) {
       throw new Error(`Missing required environment variable: ${varName}`);
     }
   });
 }
-

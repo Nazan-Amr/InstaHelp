@@ -221,7 +221,10 @@ class AuthService {
   /**
    * Login user (after OTP verification)
    */
-  async login(email: string, password: string): Promise<{ user: User; accessToken: string; refreshToken: string }> {
+  async login(
+    email: string,
+    password: string
+  ): Promise<{ user: User; accessToken: string; refreshToken: string }> {
     // Find user
     const { data: user, error } = await supabase
       .from('users')
@@ -348,4 +351,3 @@ class AuthService {
 }
 
 export const authService = new AuthService();
-

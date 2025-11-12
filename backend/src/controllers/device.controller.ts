@@ -48,4 +48,3 @@ export const ingestVitals = async (req: Request, res: Response): Promise<void> =
     },
   });
 };
-

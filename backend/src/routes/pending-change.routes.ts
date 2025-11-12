@@ -1,5 +1,9 @@
 import { Router } from 'express';
-import { getPendingChanges, approveChange, rejectChange } from '../controllers/pending-change.controller';
+import {
+  getPendingChanges,
+  approveChange,
+  rejectChange,
+} from '../controllers/pending-change.controller';
 import { authenticate } from '../middleware/auth.middleware';
 import { asyncHandler } from '../middleware/async-handler';
 import { body } from 'express-validator';
@@ -24,4 +28,3 @@ router.post(
 );
 
 export default router;
-

@@ -18,4 +18,3 @@ const deviceRateLimiter = rateLimit({
 router.post('/:deviceId/vitals', deviceRateLimiter, asyncHandler(ingestVitals));
 
 export default router;
-

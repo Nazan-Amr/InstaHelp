@@ -11,7 +11,7 @@ import { supabase } from '../config/database';
 /**
  * Public emergency view endpoint (no authentication required)
  * Accessible via QR code: /r/:token
- * 
+ *
  * Query params:
  * - full=true&auth_token=<jwt> : For doctors/owners to access full medical records
  */
@@ -48,7 +48,7 @@ export const getEmergencyView = async (req: Request, res: Response): Promise<voi
     try {
       // Verify JWT and get user info
       const { data, error } = await supabase.auth.getUser(authToken);
-      
+
       if (!error && data.user) {
         // Get user role from database
         const { data: userData } = await supabase
@@ -127,4 +127,3 @@ export const getEmergencyView = async (req: Request, res: Response): Promise<voi
     is_authenticated: fullData !== null,
   });
 };
-

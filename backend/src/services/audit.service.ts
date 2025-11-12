@@ -87,7 +87,7 @@ class AuditService {
       return [];
     }
 
-    return (data || []).map((log) => this.mapAuditLogFromDB(log));
+    return (data || []).map(log => this.mapAuditLogFromDB(log));
   }
 
   /**
@@ -109,4 +109,3 @@ class AuditService {
 }
 
 export const auditService = new AuditService();
-

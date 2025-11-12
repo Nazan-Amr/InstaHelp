@@ -8,4 +8,3 @@ const router = Router();
 router.get('/:token', asyncHandler(getEmergencyView));
 
 export default router;
-

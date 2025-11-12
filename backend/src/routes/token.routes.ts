@@ -14,4 +14,3 @@ router.post('/rotate', asyncHandler(rotateToken));
 router.post('/revoke', asyncHandler(revokeToken));
 
 export default router;
-

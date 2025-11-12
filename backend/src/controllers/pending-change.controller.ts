@@ -6,13 +6,19 @@ import { getClientIp } from '../middleware/auth.middleware';
 import { AppError } from '../middleware/error.middleware';
 import { supabase } from '../config/database';
 
-export const getPendingChanges = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+export const getPendingChanges = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
   if (!req.user) {
     throw new AppError(401, 'Unauthorized');
   }
 
   // Get changes requiring approval from this user
-  const changesForApproval = await approvalService.getPendingChangesForApproval(req.user.userId, req.user.role);
+  const changesForApproval = await approvalService.getPendingChangesForApproval(
+    req.user.userId,
+    req.user.role
+  );
 
   // Also get changes initiated by this user (for owners to see their own pending changes)
   let myChanges: any[] = [];
@@ -53,20 +59,18 @@ export const getPendingChanges = async (req: AuthenticatedRequest, res: Response
 
   // Combine and deduplicate
   const allChanges = [...changesForApproval, ...myChanges];
-  const uniqueChanges = Array.from(
-    new Map(allChanges.map((change) => [change.id, change])).values()
-  );
+  const uniqueChanges = Array.from(new Map(allChanges.map(change => [change.id, change])).values());
 
   // Enhance changes with approval status details
   const enhancedChanges = uniqueChanges.map((change: any) => {
     const approvals = change.approvals || [];
     const ownerApprovals = approvals.filter((a: any) => a.user_role === 'owner').length;
     const doctorApprovals = approvals.filter((a: any) => a.user_role === 'doctor').length;
-    
+
     let requiredOwners = 0;
     let requiredDoctors = 0;
     let approvalStatus = '';
-    
+
     if (change.initiated_by_role === 'owner') {
       requiredOwners = 0;
       requiredDoctors = 2;
@@ -84,7 +88,7 @@ export const getPendingChanges = async (req: AuthenticatedRequest, res: Response
         approvalStatus = 'Waiting for 1 doctor approval';
       }
     }
-    
+
     if (change.status === 'finalized') {
       approvalStatus = 'Finalized';
     } else if (change.status === 'rejected') {
@@ -173,4 +177,3 @@ export const rejectChange = async (req: AuthenticatedRequest, res: Response): Pr
     throw error;
   }
 };
-

@@ -2,7 +2,9 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import logger from '../utils/logger';
 
 if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-  throw new Error('Missing Supabase configuration. Check SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY environment variables.');
+  throw new Error(
+    'Missing Supabase configuration. Check SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY environment variables.'
+  );
 }
 
 // Service role client (bypasses RLS - use with caution)
@@ -30,4 +32,3 @@ export const supabaseAnon = createClient(
 );
 
 logger.info('Supabase client initialized');
-

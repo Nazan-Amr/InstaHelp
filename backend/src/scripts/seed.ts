@@ -114,11 +114,13 @@ async function seed() {
               phone: '+1234567890',
               relationship: 'Spouse',
             },
-            short_instructions: 'Patient has severe peanut allergy. Use epinephrine if anaphylaxis occurs.',
+            short_instructions:
+              'Patient has severe peanut allergy. Use epinephrine if anaphylaxis occurs.',
           },
           {
             national_id: '123456789',
-            full_medical_history: 'Previous heart surgery in 2020. Diabetes type 2 diagnosed in 2018.',
+            full_medical_history:
+              'Previous heart surgery in 2020. Diabetes type 2 diagnosed in 2018.',
             medications: ['Metformin 500mg twice daily', 'Aspirin 81mg daily'],
             doctor_notes: 'Patient stable. Continue current medication regimen.',
             scanned_files: [],
@@ -174,4 +176,3 @@ async function seed() {
 }
 
 seed();
-

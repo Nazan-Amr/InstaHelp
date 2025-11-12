@@ -83,7 +83,7 @@ class ApprovalService {
       return [];
     }
 
-    return (data || []).map((change) => this.mapPendingChangeFromDB(change));
+    return (data || []).map(change => this.mapPendingChangeFromDB(change));
   }
 
   /**
@@ -110,14 +110,19 @@ class ApprovalService {
     }
 
     // Filter changes that require approval from this user
-    const changes = (data || []).map((change) => this.mapPendingChangeFromDB(change));
-    return changes.filter((change) => this.requiresApprovalFrom(change, userId, userRole, patientId));
+    const changes = (data || []).map(change => this.mapPendingChangeFromDB(change));
+    return changes.filter(change => this.requiresApprovalFrom(change, userId, userRole, patientId));
   }
 
   /**
    * Approve a pending change
    */
-  async approveChange(changeId: string, userId: string, userRole: UserRole, comment?: string): Promise<void> {
+  async approveChange(
+    changeId: string,
+    userId: string,
+    userRole: UserRole,
+    comment?: string
+  ): Promise<void> {
     const change = await this.getPendingChangeById(changeId);
     if (!change) {
       throw new Error('Pending change not found');
@@ -129,13 +134,13 @@ class ApprovalService {
     }
 
     // Check if user already approved
-    const alreadyApproved = change.approvals.some((approval) => approval.user_id === userId);
+    const alreadyApproved = change.approvals.some(approval => approval.user_id === userId);
     if (alreadyApproved) {
       throw new Error('You have already approved this change');
     }
 
     // Check if user already rejected
-    const alreadyRejected = change.rejections.some((rejection) => rejection.user_id === userId);
+    const alreadyRejected = change.rejections.some(rejection => rejection.user_id === userId);
     if (alreadyRejected) {
       throw new Error('You have already rejected this change');
     }
@@ -185,7 +190,12 @@ class ApprovalService {
   /**
    * Reject a pending change
    */
-  async rejectChange(changeId: string, userId: string, userRole: UserRole, reason?: string): Promise<void> {
+  async rejectChange(
+    changeId: string,
+    userId: string,
+    userRole: UserRole,
+    reason?: string
+  ): Promise<void> {
     const change = await this.getPendingChangeById(changeId);
     if (!change) {
       throw new Error('Pending change not found');
@@ -245,14 +255,22 @@ class ApprovalService {
     // Apply the change based on change_type
     if (change.change_type === 'public_view') {
       const publicView = { ...patient.public_view };
-      this.setNestedValue(publicView, change.field_path.replace('public_view.', ''), change.new_value);
+      this.setNestedValue(
+        publicView,
+        change.field_path.replace('public_view.', ''),
+        change.new_value
+      );
       await patientService.updatePublicView(change.patient_id, publicView);
     } else if (change.change_type === 'private_profile') {
       const privateProfile = await patientService.getPrivateProfile(change.patient_id);
       if (!privateProfile) {
         throw new Error('Private profile not found');
       }
-      this.setNestedValue(privateProfile, change.field_path.replace('private_profile.', ''), change.new_value);
+      this.setNestedValue(
+        privateProfile,
+        change.field_path.replace('private_profile.', ''),
+        change.new_value
+      );
       await patientService.updatePrivateProfile(change.patient_id, privateProfile);
     }
 
@@ -292,10 +310,13 @@ class ApprovalService {
   /**
    * Check if change has enough approvals
    */
-  private checkApprovalRequirements(change: PendingChange, approvals: PendingChange['approvals']): boolean {
+  private checkApprovalRequirements(
+    change: PendingChange,
+    approvals: PendingChange['approvals']
+  ): boolean {
     const required = this.getRequiredApprovals(change);
-    const ownerApprovals = approvals.filter((a) => a.user_role === UserRole.OWNER).length;
-    const doctorApprovals = approvals.filter((a) => a.user_role === UserRole.DOCTOR).length;
+    const ownerApprovals = approvals.filter(a => a.user_role === UserRole.OWNER).length;
+    const doctorApprovals = approvals.filter(a => a.user_role === UserRole.DOCTOR).length;
 
     return ownerApprovals >= required.owners && doctorApprovals >= required.doctors;
   }
@@ -310,13 +331,13 @@ class ApprovalService {
     patientId: string | null
   ): boolean {
     // Check if already approved by this user
-    const alreadyApproved = change.approvals.some((a) => a.user_id === userId);
+    const alreadyApproved = change.approvals.some(a => a.user_id === userId);
     if (alreadyApproved) {
       return false;
     }
 
     // Check if already rejected by this user
-    const alreadyRejected = change.rejections.some((r) => r.user_id === userId);
+    const alreadyRejected = change.rejections.some(r => r.user_id === userId);
     if (alreadyRejected) {
       return false;
     }
@@ -422,4 +443,3 @@ class ApprovalService {
 }
 
 export const approvalService = new ApprovalService();
-

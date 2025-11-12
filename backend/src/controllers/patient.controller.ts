@@ -36,7 +36,10 @@ export const getMyProfile = async (req: AuthenticatedRequest, res: Response): Pr
   });
 };
 
-export const initializeProfile = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+export const initializeProfile = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
   if (!req.user) {
     throw new AppError(401, 'Unauthorized');
   }
@@ -141,7 +144,10 @@ export const getEmergencyView = async (req: AuthenticatedRequest, res: Response)
   });
 };
 
-export const createPendingChange = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+export const createPendingChange = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
   if (!req.user) {
     throw new AppError(401, 'Unauthorized');
   }
@@ -158,7 +164,11 @@ export const createPendingChange = async (req: AuthenticatedRequest, res: Respon
     throw new AppError(404, 'Patient not found');
   }
 
-  if (req.user.role !== UserRole.OWNER && req.user.role !== UserRole.DOCTOR && req.user.role !== UserRole.ADMIN) {
+  if (
+    req.user.role !== UserRole.OWNER &&
+    req.user.role !== UserRole.DOCTOR &&
+    req.user.role !== UserRole.ADMIN
+  ) {
     throw new AppError(403, 'Only owners and doctors can create pending changes');
   }
 
@@ -217,4 +227,3 @@ function getNestedValue(obj: any, path: string): any {
   }
   return current;
 }
-

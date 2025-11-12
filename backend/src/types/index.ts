@@ -213,4 +213,3 @@ export interface DeviceVitalsPayload {
   signature: string;
   [key: string]: any;
 }
-

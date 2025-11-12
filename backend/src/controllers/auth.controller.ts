@@ -54,18 +54,19 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     }
   }
 
-  const user = await authService.register(email, password, role, licenseNumber, licenseFilePath, doctorName);
+  const user = await authService.register(
+    email,
+    password,
+    role,
+    licenseNumber,
+    licenseFilePath,
+    doctorName
+  );
 
   // Log registration
-  await auditService.log(
-    user.id,
-    user.role,
-    getClientIp(req),
-    'user_registered',
-    'user',
-    user.id,
-    { role: user.role }
-  );
+  await auditService.log(user.id, user.role, getClientIp(req), 'user_registered', 'user', user.id, {
+    role: user.role,
+  });
 
   res.status(201).json({
     message: 'User registered successfully. Please verify your email.',
